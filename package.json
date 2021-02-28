@@ -1,0 +1,16 @@
+{
+  "name": "smixel-golf",
+  "version": "1.0.0",
+  "description": "A golf game with no skill cap",
+  "main": "app.js",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "discord.js-commando": "^0.12.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "munrock@gmail.com",
+  "license": "CC-BY-NC-SA-4.0"
+}
