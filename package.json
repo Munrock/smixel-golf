@@ -6,9 +6,12 @@
   "dependencies": {
     "discord.js": "^12.5.1",
     "discord.js-commando": "^0.12.2",
-    "moment-timezone": "^0.5.33"
+    "moment-timezone": "^0.5.33",
+    "mongoose": "^5.11.18"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
