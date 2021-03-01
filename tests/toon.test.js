@@ -1,3 +1,6 @@
-test('Our first test', () => {
-    throw new Error('something failed');
+
+describe('Toon', ()=>{
+    test('Our first test', () => {
+        throw new Error('something failed');
+    });
 });
