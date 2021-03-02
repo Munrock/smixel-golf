@@ -37,7 +37,7 @@ describe('Toon', () => {
         expect(testtoon.data._id).toBeDefined();
     });
 
-    test('edit a toon data', async () => {
+    test('edit toon data', async () => {
         const testtoon = await Toon.getFromPlayerId('12345654321');
         testtoon.data.name.nick = "The Lasskicker";
         testtoon.data.pronouns = "f";
