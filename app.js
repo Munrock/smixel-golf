@@ -23,7 +23,7 @@ db.once('open', function () {
 });
 
 const client = new CommandoClient({
-	commandPrefix: ',,',
+	commandPrefix: 'g.',
 	owner: process.env.OWNER_ID,
 	invite: process.env.INVITE_URL,
 });
