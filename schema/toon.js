@@ -75,7 +75,4 @@ const toonSchema = new Schema({
 
 
 
-module.exports = {
-    Toon: mongoose.model('Toon', toonSchema),
-
-};
+module.exports = mongoose.model('Toon', toonSchema);
