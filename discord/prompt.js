@@ -8,7 +8,7 @@ const textPrompt = async function (msg, responderIds, defaultResponse, acceptedR
             let responseMatch;
             if(!!acceptedResponses){
                 acceptedResponses.push('"');
-                repsonseMatch = acceptedResponses.includes(response.content)
+                responseMatch = acceptedResponses.includes(response.content);
             }else{
                 //any response accepted
                 responseMatch = true;
