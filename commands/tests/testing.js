@@ -1,6 +1,6 @@
 const { Command } = require('discord.js-commando');
 
-const prompt = require('./../../lib/discord/prompt');
+const prompt = require('../../discord/prompt');
 
 module.exports = class ActivityCommand extends Command {
     constructor(client) {
