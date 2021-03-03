@@ -31,7 +31,7 @@ const client = new CommandoClient({
 client.registry
 	.registerDefaultTypes()
 	.registerGroups([
-		['play', 'Gameplay Commands']
+		[ 'tests']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands({ unknownCommand: false, })
