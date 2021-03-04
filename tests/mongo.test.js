@@ -119,3 +119,13 @@ describe('Player', () => {
     });
 
 });
+
+describe('GameData', () =>{
+
+test('load a player and get their toon', async ()=> {
+    const g = new GameData();
+    const becky = await g.getPlayer('gameplayertestid1').toon();
+    expect(becky.data.name.full).toBe("Becky Lynch");
+});
+
+});
