@@ -19,7 +19,7 @@ describe('Toon', () => {
     test('create a toon', async () => {
         const testtoon = await Toon.make({
             name: { name: "Becky", nick: "The Man", full: "Becky Lynch", }
-        }, '12345654321');
+        }, 'toontestid');
 
         expect(testtoon.data.name.name).toBe("Becky");
         expect(testtoon.data.name.nick).toBe("The Man");
@@ -29,7 +29,7 @@ describe('Toon', () => {
     });
 
     test('retrieve a toon', async () => {
-        const testtoon = await Toon.getFromPlayerId('12345654321');
+        const testtoon = await Toon.getFromPlayerId('toontestid');
 
         expect(testtoon.data.name.name).toBe("Becky");
         expect(testtoon.data.name.nick).toBe("The Man");
@@ -39,7 +39,7 @@ describe('Toon', () => {
     });
 
     test('toon pronouns', async () => {
-        const testtoon = await Toon.getFromPlayerId('12345654321');
+        const testtoon = await Toon.getFromPlayerId('toontestid');
 
         const string = "name is name0, nick is nick0, full name is full0, :: line break sub0 vtb0 nick0, this sentence is about obj0, the championship is pop0, it is poa0 championship, sub0 vtb0 the best.";
 
@@ -50,11 +50,11 @@ describe('Toon', () => {
 
 
     test('edit toon data', async () => {
-        const testtoon = await Toon.getFromPlayerId('12345654321');
+        const testtoon = await Toon.getFromPlayerId('toontestid');
         testtoon.data.name.nick = "The Lasskicker";
         testtoon.data.pronouns = "f";
         await testtoon.save();
-        const updatedtoon = await Toon.getFromPlayerId('12345654321');
+        const updatedtoon = await Toon.getFromPlayerId('toontestid');
 
         expect(updatedtoon.data.name.name).toBe("Becky");
         expect(updatedtoon.data.name.nick).toBe("The Lasskicker");
@@ -65,7 +65,7 @@ describe('Toon', () => {
 
 
     test('toon pronouns again', async () => {
-        const testtoon = await Toon.getFromPlayerId('12345654321');
+        const testtoon = await Toon.getFromPlayerId('toontestid');
 
         const string = "name is name0, nick is nick0, full name is full0, :: line break sub0 vtb0 nick0, this sentence is about obj0, the championship is pop0, it is poa0 championship, sub0 vtb0 the best.";
 
@@ -76,9 +76,10 @@ describe('Toon', () => {
 
 
     test('delete a toon', async () => {
-        const testtoon = await Toon.getFromPlayerId('12345654321');
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const ttid = testtoon.data._id;
         await testtoon.destroy();
-        const deletedtoon = await Toon.getFromPlayerId('12345654321');
+        const deletedtoon = await Toon.getFromId(ttid);
         expect(deletedtoon).toBe(false);
     });
 

@@ -10,16 +10,16 @@ beforeAll(async () => {
         useUnifiedTopology: true,
         useFindAndModify: false 
     });
-    const testtoon = await Toon.make({
+    await Toon.make({
         name: { name: "Becky", nick: "The Man", full: "Becky Lynch", }
-    }, '12345654321');
+    }, 'gameplayertestid1');
 
 });
 
 afterAll(async () => {
-    const testtoon = await Toon.getFromPlayerId('12345654321');
+    const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
     await testtoon.destroy();
-    const othertoon = await Toon.getFromPlayerId('asdfgfdsa');
+    const othertoon = await Toon.getFromPlayerId('gameplayertestid2');
     await othertoon.destroy();
 
     mongoose.connection.close();
@@ -28,7 +28,7 @@ afterAll(async () => {
 describe('Player', () => {
 
     test('retrieve a toon from player', async () => {
-        const player = new Player('12345654321');
+        const player = new Player('gameplayertestid1');
 
         const toon = await player.toon();
         expect(toon.data.name.full).toBe("Becky Lynch");
@@ -36,10 +36,10 @@ describe('Player', () => {
 
 
     test('set player focus on another toon', async () => {
-        const player = new Player('12345654321');
+        const player = new Player('gameplayertestid1');
         const othertoon = await Toon.make({
             name: { name: "Charlotte", nick: "The Queen", full: "Charlotte Flair", }
-        }, 'asdfgfdsa');
+        }, 'gameplayertestid2');
 
         player.focusToon(othertoon);
     
