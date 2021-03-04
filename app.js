@@ -9,7 +9,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 mongoose.connect(process.env.MONGODB_ADDRESS, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true
+	useUnifiedTopology: true,
+	useFindAndModify: false 
 })
 	.then(() => console.log('MONGO IS CONNECTED'))
 	.catch(err => console.error('MONGO CONNECTION FAILED', err));

@@ -7,7 +7,8 @@ const GameData = require('./../lib/game-data');
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_ADDRESS, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false 
     });
     const testtoon = await Toon.make({
         name: { name: "Becky", nick: "The Man", full: "Becky Lynch", }

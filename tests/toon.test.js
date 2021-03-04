@@ -5,7 +5,8 @@ const Toon = require('./../lib/toon');
 beforeAll(async () => {
     return await mongoose.connect(process.env.MONGODB_ADDRESS, {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+         useFindAndModify: false 
     });
 
 });
