@@ -1,12 +1,12 @@
 //load environmental variables
 require('dotenv').config();
-
-//discord
+const mongoose = require('mongoose');
+const GameData = require('./lib/game-data');
 const { CommandoClient } = require('discord.js-commando');
 const path = require('path');
 
 //db
-const mongoose = require('mongoose');
+
 mongoose.connect(process.env.MONGODB_ADDRESS, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
@@ -23,6 +23,7 @@ db.once('open', function () {
 
 });
 
+//discord
 const client = new CommandoClient({
 	commandPrefix: 'g.',
 	owner: process.env.OWNER_ID,
@@ -43,6 +44,7 @@ client.registry
 client.once('ready', () => {
 	console.log('client ready');
 	if(process.env.NODE_ENV=='development')	client.user.setActivity('Development Mode',{type:'PLAYING'});
+	client.gameData = new GameData();
 });
 
 client.on('error', console.error);
