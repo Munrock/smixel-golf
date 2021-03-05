@@ -3,12 +3,13 @@ const mongoose = require('mongoose');
 const Toon = require('./../lib/toon');
 const Player = require('./../lib/player');
 const GameData = require('./../lib/game-data');
+const Card = require('./../schema/card');
 
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_ADDRESS, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
-        useFindAndModify: false 
+        useFindAndModify: false
     });
     await Toon.make({
         name: { name: "Becky", nick: "The Man", full: "Becky Lynch", }
@@ -59,7 +60,6 @@ describe('Toon', () => {
         expect(processed).toEqual(["name is Becky, nick is The Man, full name is Becky Lynch, ", " line break they are The Man, this sentence is about them, the championship is theirs, it is their championship, they are the best."]);
     });
 
-
     test('edit toon data', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
         testtoon.data.name.nick = "The Lasskicker";
@@ -74,7 +74,6 @@ describe('Toon', () => {
         expect(updatedtoon.data._id).toBeDefined();
     });
 
-
     test('toon pronouns again', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
 
@@ -84,7 +83,6 @@ describe('Toon', () => {
 
         expect(processed).toEqual(["name is Becky, nick is The Lasskicker, full name is Becky Lynch, ", " line break she is The Lasskicker, this sentence is about her, the championship is hers, it is her championship, she is the best."]);
     });
-
 
     test('delete a toon', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
@@ -105,7 +103,6 @@ describe('Player', () => {
         expect(toon.data.name.full).toBe("Becky Lynch");
     });
 
-
     test('set player focus on another toon', async () => {
         const player = new Player('gameplayertestid1');
         const othertoon = await Toon.make({
@@ -113,19 +110,54 @@ describe('Player', () => {
         }, 'gameplayertestid2');
 
         player.focusToon(othertoon);
-    
+
         const toon = await player.toon();
         expect(toon.data.name.full).toBe("Charlotte Flair");
     });
 
 });
 
-describe('GameData', () =>{
+describe('Card Schema', ()=>{
 
-test('load a player and get their toon', async ()=> {
-    const g = new GameData();
-    const becky = await g.getPlayer('gameplayertestid1').toon();
-    expect(becky.data.name.full).toBe("Becky Lynch");
+    test('create', async () => {
+        const card = new Card();
+        card.name = 'Test Club';
+        card.namespace = 'Test Cards';
+        card.slot = 'main hand';
+        card.category = 'gear';
+        card.tags = ['club','blunt','melee'];
+        card.temporary = false;
+        card.cursed = false;
+        await card.save();
+        expect(card._id).toBeDefined();
+    });
+
+    test('retrieve, update', async () => {
+        const card = await Card.findOne({name: 'Test Club', namespace:'Test Cards'});
+        card.name = 'Spiky Test Club';
+        card.tags.push('piercing');
+        await card.save();
+        expect(card.name).toBe('Spiky Test Club');
+        expect(card.tags).toContain('piercing');
+    });
+
+    test('retrieve, delete', async () => {
+        const card = await Card.findOne({namespace: 'Test Cards'});
+        const id = card._id;
+        expect(id).toBeDefined();
+        await Card.findByIdAndDelete(id);
+        const deletedcard = await Card.findById(id);
+        expect(deletedcard).toBeNull();
+    });
+
 });
+
+describe('GameData', () => {
+
+    test('load a player and get their toon', async () => {
+        const g = new GameData();
+        const becky = await g.getPlayer('gameplayertestid1').toon();
+        expect(becky.data.name.full).toBe("Becky Lynch");
+    });
 
 });
