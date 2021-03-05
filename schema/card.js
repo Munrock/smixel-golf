@@ -8,6 +8,10 @@ const cardSchema = new Schema({
     //slot defines an equipment slot / concept
     //can have multiple slots e.g. 'main hand' and 'off-hand'
     slot: { type: [String], default: ['none']}, // if 'none', ignore all other entries.
+
+    //aesthetic supercategory of slot
+    //non-strict enum: gear, status, skill, personality
+    category: { type: String, default: 'gear'},
     
     //tags define the traits that will be added to the character.
     //these have no inherent abilities but can be checked for by tests
