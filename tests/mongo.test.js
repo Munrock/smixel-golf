@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Toon = require('./../lib/toon');
 const Player = require('./../lib/player');
 const GameData = require('./../lib/game-data');
-const Card = require('./../schema/card');
+const CardData = require('./../schema/card');
 
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_ADDRESS, {
@@ -120,7 +120,7 @@ describe('Player', () => {
 describe('Card Schema', ()=>{
 
     test('create', async () => {
-        const card = new Card();
+        const card = new CardData();
         card.name = 'Test Club';
         card.namespace = 'Test Cards';
         card.slot = 'main hand';
@@ -133,7 +133,7 @@ describe('Card Schema', ()=>{
     });
 
     test('retrieve, update', async () => {
-        const card = await Card.findOne({name: 'Test Club', namespace:'Test Cards'});
+        const card = await CardData.findOne({name: 'Test Club', namespace:'Test Cards'});
         card.name = 'Spiky Test Club';
         card.tags.push('piercing');
         await card.save();
@@ -142,11 +142,11 @@ describe('Card Schema', ()=>{
     });
 
     test('retrieve, delete', async () => {
-        const card = await Card.findOne({namespace: 'Test Cards'});
+        const card = await CardData.findOne({namespace: 'Test Cards'});
         const id = card._id;
         expect(id).toBeDefined();
         await Card.findByIdAndDelete(id);
-        const deletedcard = await Card.findById(id);
+        const deletedcard = await CardData.findById(id);
         expect(deletedcard).toBeNull();
     });
 
