@@ -4,6 +4,7 @@ const Toon = require('./../lib/toon');
 const Player = require('./../lib/player');
 const GameData = require('./../lib/game-data');
 const CardData = require('./../schema/card');
+const CardLibrary = require('./../lib/card-library');
 
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_ADDRESS, {
@@ -22,6 +23,10 @@ afterAll(async () => {
     await testtoon.destroy();
     const othertoon = await Toon.getFromPlayerId('gameplayertestid2');
     await othertoon.destroy();
+
+    await CardData.deleteMany({
+        namespace:'testatoes' 
+     });
 
     mongoose.connection.close();
 });
@@ -117,15 +122,15 @@ describe('Player', () => {
 
 });
 
-describe('Card Schema', ()=>{
+describe('Card Schema', () => {
 
     test('create', async () => {
         const card = new CardData();
         card.name = 'Test Club';
-        card.namespace = 'Test Cards';
+        card.namespace = 'testatoes';
         card.slot = 'main hand';
         card.category = 'gear';
-        card.tags = ['club','blunt','melee'];
+        card.tags = ['club', 'blunt', 'melee'];
         card.temporary = false;
         card.cursed = false;
         await card.save();
@@ -133,7 +138,7 @@ describe('Card Schema', ()=>{
     });
 
     test('retrieve, update', async () => {
-        const card = await CardData.findOne({name: 'Test Club', namespace:'Test Cards'});
+        const card = await CardData.findOne({ name: 'Test Club', namespace: 'testatoes' });
         card.name = 'Spiky Test Club';
         card.tags.push('piercing');
         await card.save();
@@ -142,13 +147,42 @@ describe('Card Schema', ()=>{
     });
 
     test('retrieve, delete', async () => {
-        const card = await CardData.findOne({namespace: 'Test Cards'});
+        const card = await CardData.findOne({ namespace: 'testatoes' });
         const id = card._id;
         expect(id).toBeDefined();
-        await Card.findByIdAndDelete(id);
+        await CardData.findByIdAndDelete(id);
         const deletedcard = await CardData.findById(id);
         expect(deletedcard).toBeNull();
     });
+
+});
+
+describe('Card Library', () => {
+
+    test('Create multiple', async () => {
+        await CardLibrary.create('testatoes', 'testato');
+        await CardLibrary.create('testatoes', 'testato');
+        const card = await CardLibrary.create('testatoes', 'testaaato');
+        expect(card).toBeDefined();
+    });
+
+    test('retrieve unique', async () => {
+        const card = await CardLibrary.findByNameSpace('testatoes', 'testaaato');
+        expect(card.name).toBe('testaaato');
+        card.name = 'testato';
+        await card.save();
+    });
+
+    test('retrieve clash', async () => {
+        const card = await CardLibrary.findByNameSpace('testatoes', 'testato');
+        expect(card.name).toBe('testato (1)');
+    });
+
+    test('retrieve no match', async () => {
+        const card = await CardLibrary.findByNameSpace('testatoes', 'nuttin');
+        expect(card).toBeNull();
+    });
+
 
 });
 
