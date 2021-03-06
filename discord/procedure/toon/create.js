@@ -23,18 +23,18 @@ async function create_toon(msg) {
         "1 they/them",
         "2 she/her",
         "3 he/him",
-        "4 it/🤖",
+        "4 it🤖",
     ].join("\r\n"));
 
     constPronounResponse = await prompt(msg, [playerId], "1", ['1','2','3','4']);
-    data.pronouns = ['np','f','m','ns'][parseInt(constPronounResponse)+1];
+    data.pronouns = ['np','f','m','ns'][parseInt(constPronounResponse)-1];
 
     //get the names
     await msg.reply([
         "now decide character names.  You can specify 3 different names, or make them all the same",
-        "regular name, e.g. Fappington",
-        "'Full' name, e.g. Sir Fappington",
-        "Nickname, e.g. Fappy",
+        "regular name, e.g. Luigi",
+        "'Full' name, e.g. Luigi Mario",
+        "Nickname, e.g. Lulu",
         `Start with the regular name [${data.name.name}]:`
     ].join("\r\n"));
     data.name.name = await prompt(msg, [playerId], data.name.name);
