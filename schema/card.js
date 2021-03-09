@@ -13,9 +13,13 @@ const cardSchema = new Schema({
     //non-strict enum: gear, status, skill, personality
     category: { type: String, default: 'gear'},
     
-    //tags define the traits that will be added to the character.
-    //these have no inherent abilities but can be checked for by tests
+    //tags define inherent properties of the card.
+    //these have no inherent mechanical abilities but can be checked for by tests
     tags: {type: [String], default: []},
+
+    //ctags define the traits that will be added to the *character*.
+    //these have no inherent mechanical abilities but can be checked for by tests
+    ctags: {type: [String], default: []},
 
     //does the card disappear at the end of a run?
     temporary: {type: Boolean, default: false},
