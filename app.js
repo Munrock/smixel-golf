@@ -34,7 +34,9 @@ client.registry
 	.registerDefaultTypes()
 	.registerGroups([
 		[ 'tests'],
-		['toons']
+		['toons'],
+		['play'],
+		['editor']
 	])
 	.registerDefaultGroups()
 	.registerDefaultCommands({ unknownCommand: false, })
