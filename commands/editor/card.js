@@ -32,7 +32,7 @@ module.exports = class ActivityCommand extends Command {
                 },
                 {
                     key: 'slot',
-                    prompt: `Inventory Slot?`,
+                    prompt: `Inventory Slot (can be more than one, seperated by commas)?`,
                     type: 'string',
                     wait: 600
                 },
@@ -68,9 +68,9 @@ module.exports = class ActivityCommand extends Command {
         const card = await CardLibrary.create(namespace.trim(), name.trim());
 
         card.category = category.trim();
-        card.slot = slot.trim();
+        card.slot = slot.split(",").map(slot=>slot.trim());
         card.tags = tags.split(",").map(tag => tag.trim());;
-        card.ctags = ctags.split(",").map(tag => tag.trim());;
+        card.ctags = ctags.split(",").map(ctag => ctag.trim());;
         card.temporary = temporary;
         card.cursed = cursed;
 
