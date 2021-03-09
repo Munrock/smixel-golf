@@ -22,6 +22,9 @@ const cardSchema = new Schema({
 
     //can the card be removed by the player?
     cursed: {type: Boolean, default: false},
+
+    //has this card been renamed due to beinga duplicate?
+    dupe: {type: Boolean, default: false}
 });
 
 module.exports = mongoose.model('Card', cardSchema);
