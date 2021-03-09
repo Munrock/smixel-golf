@@ -43,6 +43,12 @@ module.exports = class ActivityCommand extends Command {
                     wait: 600
                 },
                 {
+                    key: 'ctags',
+                    prompt: `character property tags, broken up by commas?`,
+                    type: 'string',
+                    wait: 600
+                },
+                {
                     key: 'temporary',
                     prompt: `Temporary?`,
                     type: 'boolean'
@@ -56,7 +62,7 @@ module.exports = class ActivityCommand extends Command {
         });
     }
 
-    async run(msg, { namespace, name, category, slot, tags, temporary, cursed }) {
+    async run(msg, { namespace, name, category, slot, tags, ctags, temporary, cursed }) {
 
 
         const card = await CardLibrary.create(namespace.trim(), name.trim());
@@ -64,6 +70,7 @@ module.exports = class ActivityCommand extends Command {
         card.category = category.trim();
         card.slot = slot.trim();
         card.tags = tags.split(",").map(tag => tag.trim());;
+        card.ctags = ctags.split(",").map(tag => tag.trim());;
         card.temporary = temporary;
         card.cursed = cursed;
 
