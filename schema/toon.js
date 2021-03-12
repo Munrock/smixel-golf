@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const CardData = require('./card');
 
 
 const { Schema } = mongoose;
@@ -10,8 +11,18 @@ const toonSchema = new Schema({
         full: String,
         name: String,
     },
+    gear: {
+        type: Map,
+        of: Schema.Types.ObjectId,
+        ref: 'Card'
+    },
+    deck: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Card'
+    }],
     pronouns: { type: String, enum: ['f', 'm', 'np', 'ns'], default: 'np' },
     //Masculine, Feminine, Neutral-Plural, Neutral-Singular
+
     stats: {
         base: {
             physical: {
