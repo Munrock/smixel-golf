@@ -11,11 +11,6 @@ const toonSchema = new Schema({
         full: String,
         name: String,
     },
-    gear: {
-        type: Map,
-        of: Schema.Types.ObjectId,
-        ref: 'Card'
-    },
     deck: [{
         type: Schema.Types.ObjectId,
         ref: 'Card'
