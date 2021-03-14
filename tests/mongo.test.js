@@ -89,6 +89,34 @@ describe('Toon', () => {
         expect(processed).toEqual(["name is Becky, nick is The Lasskicker, full name is Becky Lynch, ", " line break she is The Lasskicker, this sentence is about her, the championship is hers, it is her championship, she is the best."]);
     });
 
+    test('fresh toon should have cards in deck', async ()=> {
+        return false;
+    });
+
+    test('add a card to toon deck', async () => {
+        return false;
+    });
+
+    test('remove a card from the toon deck', async () => {
+        return false;
+    });
+
+    test('draw a play hand from the toon deck', async () => {
+        return false;
+    });
+
+    test('recharge a card from hand to toon deck', async () => {
+        return false;
+    });
+
+    test('discard a card from hand', async () => {
+        return false;
+    });
+
+    test('destroy a card from hand', async () => {
+        return false;
+    });
+
     test('delete a toon', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
         const ttid = testtoon.data._id;
