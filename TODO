@@ -1,8 +1,6 @@
 integrate cards into toons
 -toon deck
--default cards
 -starter cards
--toon equipment slots
 -trait aggregation
 
 Discord Loadout editor
@@ -17,3 +15,5 @@ Room Schema
 Random Course Schema
 -create basic course
 -pass party through course
+
+-toon equipment slots
