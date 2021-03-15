@@ -20,7 +20,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
     const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
-    await testtoon.destroy();
+    //await testtoon.destroy();
     const othertoon = await Toon.getFromPlayerId('gameplayertestid2');
     await othertoon.destroy();
 
@@ -90,10 +90,16 @@ describe('Toon', () => {
     });
 
     test('fresh toon should have cards in deck', async ()=> {
-        return false;
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        expect(testtoon.data.deck.length).toBe(1);
+        expect(testtoon.data.deck[0].name).toBe('Putter');
     });
 
     test('add a card to toon deck', async () => {
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        await testtoon.library.addCard('core/Iron Club');
+        await testtoon.library.addCard('core/Wooden Club');
+        expect(testtoon.data.deck.length).toBe(3);
         return false;
     });
 
@@ -203,7 +209,7 @@ describe('Card Library', () => {
 
     test('retrieve clash', async () => {
         const card = await CardLibrary.findByNameSpace('testatoes', 'testato');
-        expect(card.name).toBe('testato (1)');
+        expect(card.name).toBe('testato');
     });
 
     test('retrieve no match', async () => {

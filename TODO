@@ -16,4 +16,8 @@ Random Course Schema
 -create basic course
 -pass party through course
 
+Random Course Save
+-store a randomly generated course 
+-allow players to specify a course to attempt
+
 -toon equipment slots
