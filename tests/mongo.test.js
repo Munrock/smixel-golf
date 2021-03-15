@@ -97,14 +97,16 @@ describe('Toon', () => {
 
     test('add a card to toon deck', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
-        await testtoon.library.addCard('core/Iron Club');
         await testtoon.library.addCard('core/Wooden Club');
+        await testtoon.library.addCardById('6046e622c1c3763b901f5886');
         expect(testtoon.data.deck.length).toBe(3);
-        return false;
     });
 
     test('remove a card from the toon deck', async () => {
-        return false;
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        await testtoon.library.removeCard('core/Iron Club');
+        await testtoon.library.removeCardById('6046e75541825e2e4c7fc295');
+        expect(testtoon.data.deck.length).toBe(1);
     });
 
     test('draw a play hand from the toon deck', async () => {
