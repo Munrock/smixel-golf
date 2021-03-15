@@ -95,34 +95,73 @@ describe('Toon', () => {
         expect(testtoon.data.deck[0].name).toBe('Putter');
     });
 
-    test('add a card to toon deck', async () => {
+    test('add a card to toon deck via namespace', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
-        await testtoon.library.addCard('core/Wooden Club');
-        await testtoon.library.addCardById('6046e622c1c3763b901f5886');
-        expect(testtoon.data.deck.length).toBe(3);
+        const decksize = testtoon.data.deck.length;
+        await testtoon.library.addCardByNamespace('core/Wooden Club');
+        expect(testtoon.data.deck.length).toBe(decksize+1);
     });
 
-    test('remove a card from the toon deck', async () => {
+    test('add a card to toon deck via id', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
-        await testtoon.library.removeCard('core/Iron Club');
+        const decksize = testtoon.data.deck.length;
+        await testtoon.library.addCardById('6046e622c1c3763b901f5886');
+        expect(testtoon.data.deck.length).toBe(decksize+1);
+    });
+
+    test('remove a card from the toon deck via namespace', async () => {
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const decksize = testtoon.data.deck.length;
+        await testtoon.library.removeCardByNamespace('core/Iron Club');
+        expect(testtoon.data.deck.length).toBe(decksize-1);
+    });
+
+    test('remove a card from the toon deck via id', async () => {
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const decksize = testtoon.data.deck.length;
         await testtoon.library.removeCardById('6046e75541825e2e4c7fc295');
-        expect(testtoon.data.deck.length).toBe(1);
+        expect(testtoon.data.deck.length).toBe(decksize-1);
     });
 
     test('draw a play hand from the toon deck', async () => {
-        return false;
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        await testtoon.library.addCardByNamespace('core/Iron Club');
+        await testtoon.library.addCardByNamespace('core/Wooden Club');
+        testtoon.library.shuffleDeck();
+        testtoon.library.drawToHandSize();
+        expect(testtoon.library.hand.size).toBe(3);
     });
 
     test('recharge a card from hand to toon deck', async () => {
-        return false;
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        testtoon.library.drawToHandSize();
+        const iterator = testtoon.library.hand.values();
+        const card = iterator.next().value;
+        testtoon.library.hand.delete(card._id);
+        testtoon.library.moveToDeck(card);
+        expect(testtoon.library.hand.size).toBe(1);
+        expect(testtoon.library.deck.length).toBe(1);
     });
 
     test('discard a card from hand', async () => {
-        return false;
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        testtoon.library.drawToHandSize();
+        const iterator = testtoon.library.hand.values();
+        const card = iterator.next().value;
+        testtoon.library.hand.delete(card._id);
+        testtoon.library.moveToDiscard(card);
+        expect(testtoon.library.hand.size).toBe(1);
+        expect(testtoon.library.discard.length).toBe(1);
     });
 
     test('destroy a card from hand', async () => {
-        return false;
+        const testtoon = await Toon.getFromPlayerId('toontestid');
+        testtoon.library.drawToHandSize();
+        const iterator = testtoon.library.hand.values();
+        const card = iterator.next().value;
+        testtoon.library.hand.delete(card._id);
+        testtoon.library.removeCard(card);
+        expect(testtoon.library.hand.size).toBe(1);
     });
 
     test('delete a toon', async () => {
