@@ -17,6 +17,8 @@ const cardSchema = new Schema({
     //these have no inherent mechanical abilities but can be checked for by tests
     tags: {type: [String], default: []},
 
+    bonus: {type: [Number], default: [1]},
+
     //ctags define the traits that will be added to the *character*.
     //these have no inherent mechanical abilities but can be checked for by tests
     ctags: {type: [String], default: []},

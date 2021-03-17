@@ -38,7 +38,13 @@ module.exports = class ActivityCommand extends Command {
                 },
                 {
                     key: 'tags',
-                    prompt: `property tags, broken up by commas?`,
+                    prompt: `property tags [defines where the card bonus can be applied], broken up by commas?`,
+                    type: 'string',
+                    wait: 600
+                },
+                {
+                    key: 'bonus',
+                    prompt: `bonus dice values to be added, broken up by commas.\r\n \`0=d4, 1=d6, 2=d8, 3=d10, 4=d12, 5=d20\``,
                     type: 'string',
                     wait: 600
                 },
@@ -69,8 +75,9 @@ module.exports = class ActivityCommand extends Command {
 
         card.category = category.trim();
         card.slot = slot.split(",").map(slot=>slot.trim());
-        card.tags = tags.split(",").map(tag => tag.trim());;
-        card.ctags = ctags.split(",").map(ctag => ctag.trim());;
+        card.tags = tags.split(",").map(tag => tag.trim());
+        card.tags = tags.split(",").map(tag => parseInt(tag.trim()));
+        card.ctags = ctags.split(",").map(ctag => ctag.trim());
         card.temporary = temporary;
         card.cursed = cursed;
 
