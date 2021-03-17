@@ -76,7 +76,7 @@ module.exports = class ActivityCommand extends Command {
         card.category = category.trim();
         card.slot = slot.split(",").map(slot=>slot.trim());
         card.tags = tags.split(",").map(tag => tag.trim());
-        card.tags = tags.split(",").map(tag => parseInt(tag.trim()));
+        card.bonus = bonus.split(",").map(die => parseInt(die.trim()));
         card.ctags = ctags.split(",").map(ctag => ctag.trim());
         card.temporary = temporary;
         card.cursed = cursed;
