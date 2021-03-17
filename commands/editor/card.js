@@ -68,7 +68,7 @@ module.exports = class ActivityCommand extends Command {
         });
     }
 
-    async run(msg, { namespace, name, category, slot, tags, ctags, temporary, cursed }) {
+    async run(msg, { namespace, name, category, slot, tags, ctags, temporary, cursed, bonus }) {
 
 
         const card = await CardLibrary.create(namespace.trim(), name.trim());
