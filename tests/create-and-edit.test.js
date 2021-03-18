@@ -5,6 +5,7 @@ const Player = require('./../lib/player');
 const GameData = require('./../lib/game-data');
 const CardData = require('./../schema/card');
 const CardLibrary = require('./../lib/card-library');
+const SkillCheck = require('./../lib/skill-check');
 
 beforeAll(async () => {
     await mongoose.connect(process.env.MONGODB_ADDRESS, {
@@ -270,3 +271,5 @@ describe('GameData', () => {
     });
 
 });
+
+
