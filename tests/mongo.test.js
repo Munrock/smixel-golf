@@ -25,8 +25,8 @@ afterAll(async () => {
     await othertoon.destroy();
 
     await CardData.deleteMany({
-        namespace:'testatoes' 
-     });
+        namespace: 'testatoes'
+    });
 
     mongoose.connection.close();
 });
@@ -89,42 +89,53 @@ describe('Toon', () => {
         expect(processed).toEqual(["name is Becky, nick is The Lasskicker, full name is Becky Lynch, ", " line break she is The Lasskicker, this sentence is about her, the championship is hers, it is her championship, she is the best."]);
     });
 
-    test('fresh toon should have cards in deck', async ()=> {
+    test('delete a toon', async () => {
         const testtoon = await Toon.getFromPlayerId('toontestid');
+        const ttid = testtoon.data._id;
+        await testtoon.destroy();
+        const deletedtoon = await Toon.getFromId(ttid);
+        expect(deletedtoon).toBe(false);
+    });
+
+});
+
+describe('Toon Deck', () => {
+    test('fresh toon should have cards in deck', async () => {
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         expect(testtoon.data.deck.length).toBe(1);
         expect(testtoon.data.deck[0].name).toBe('Putter');
     });
 
     test('add a card to toon deck via namespace', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         const decksize = testtoon.data.deck.length;
         await testtoon.library.addCardByNamespace('core/Wooden Club');
-        expect(testtoon.data.deck.length).toBe(decksize+1);
+        expect(testtoon.data.deck.length).toBe(decksize + 1);
     });
 
     test('add a card to toon deck via id', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         const decksize = testtoon.data.deck.length;
         await testtoon.library.addCardById('6046e622c1c3763b901f5886');
-        expect(testtoon.data.deck.length).toBe(decksize+1);
+        expect(testtoon.data.deck.length).toBe(decksize + 1);
     });
 
     test('remove a card from the toon deck via namespace', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         const decksize = testtoon.data.deck.length;
         await testtoon.library.removeCardByNamespace('core/Iron Club');
-        expect(testtoon.data.deck.length).toBe(decksize-1);
+        expect(testtoon.data.deck.length).toBe(decksize - 1);
     });
 
     test('remove a card from the toon deck via id', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         const decksize = testtoon.data.deck.length;
         await testtoon.library.removeCardById('6046e75541825e2e4c7fc295');
-        expect(testtoon.data.deck.length).toBe(decksize-1);
+        expect(testtoon.data.deck.length).toBe(decksize - 1);
     });
 
     test('draw a play hand from the toon deck', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         await testtoon.library.addCardByNamespace('core/Iron Club');
         await testtoon.library.addCardByNamespace('core/Wooden Club');
         testtoon.library.shuffleDeck();
@@ -133,7 +144,7 @@ describe('Toon', () => {
     });
 
     test('recharge a card from hand to toon deck', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         testtoon.library.drawToHandSize();
         const iterator = testtoon.library.hand.values();
         const card = iterator.next().value;
@@ -144,7 +155,7 @@ describe('Toon', () => {
     });
 
     test('discard a card from hand', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         testtoon.library.drawToHandSize();
         const iterator = testtoon.library.hand.values();
         const card = iterator.next().value;
@@ -155,21 +166,13 @@ describe('Toon', () => {
     });
 
     test('destroy a card from hand', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
+        const testtoon = await Toon.getFromPlayerId('gameplayertestid1');
         testtoon.library.drawToHandSize();
         const iterator = testtoon.library.hand.values();
         const card = iterator.next().value;
         testtoon.library.hand.delete(card._id);
         testtoon.library.removeCard(card);
         expect(testtoon.library.hand.size).toBe(1);
-    });
-
-    test('delete a toon', async () => {
-        const testtoon = await Toon.getFromPlayerId('toontestid');
-        const ttid = testtoon.data._id;
-        await testtoon.destroy();
-        const deletedtoon = await Toon.getFromId(ttid);
-        expect(deletedtoon).toBe(false);
     });
 
 });
