@@ -17,7 +17,13 @@ const cardSchema = new Schema({
     //these have no inherent mechanical abilities but can be checked for by tests
     tags: {type: [String], default: []},
 
+    //what kind of dice to award on tag match
     bonus: {type: [Number], default: [1]},
+
+    //what to do when card is used
+    //non-strict enum: discard, destroy, recharge, remain
+    //on failed instruction, discard
+    onUse: {type: String, default: 'discard'},
 
     //ctags define the traits that will be added to the *character*.
     //these have no inherent mechanical abilities but can be checked for by tests
