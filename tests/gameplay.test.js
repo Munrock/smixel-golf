@@ -36,41 +36,42 @@ afterAll(async () => {
 });
 
 
-describe('SkillCheck',()=>{
+describe('SkillCheck', () => {
 
-    test('roll 2d6', ()=>{
-        const result = SkillCheck.roll([6,6]);
+    test('roll 2d6', () => {
+        const result = SkillCheck.roll([6, 6]);
         expect(result).toBeGreaterThanOrEqual(2);
         expect(result).toBeLessThanOrEqual(12);
     });
 
-    test('roll d6', ()=>{
+    test('roll d6', () => {
         const result = SkillCheck.roll([6]);
         expect(result).toBeGreaterThanOrEqual(1);
         expect(result).toBeLessThanOrEqual(6);
     });
 
-    test('roll 2d4', ()=>{
-        const result = SkillCheck.roll([4,4]);
+    test('roll 2d4', () => {
+        const result = SkillCheck.roll([4, 4]);
         expect(result).toBeGreaterThanOrEqual(2);
         expect(result).toBeLessThanOrEqual(8);
     });
 
-    test('roll d2', ()=>{
+    test('roll d2', () => {
         const result = SkillCheck.roll([2]);
         expect(result).toBeGreaterThanOrEqual(1);
         expect(result).toBeLessThanOrEqual(2);
     });
 
-    test('roll 2d1', ()=>{
+    test('roll 2d1', () => {
         const result = SkillCheck.roll([1]);
         expect(result).toBe(1);
     });
 
     test('failed skillcheck with no bonuses', async () => {
         const toon = await Toon.getFromPlayerId('gameplayertestid2');
+        toon.library.drawToHandSize();
         const sc = new SkillCheck(toon);
-        const results = sc.test(['misc'],5);
+        const results = sc.test(['misc'], 5);
         expect(results.result).toBe(false);
         expect(results.roll).toBeGreaterThanOrEqual(1);
         expect(results.roll).toBeLessThanOrEqual(4);
@@ -78,8 +79,9 @@ describe('SkillCheck',()=>{
 
     test('passed skillcheck with no bonuses', async () => {
         const toon = await Toon.getFromPlayerId('gameplayertestid2');
+        toon.library.drawToHandSize();
         const sc = new SkillCheck(toon);
-        const results = sc.test(['misc'],1);
+        const results = sc.test(['misc'], 1);
         expect(results.result).toBe(true);
         expect(results.roll).toBeGreaterThanOrEqual(1);
         expect(results.roll).toBeLessThanOrEqual(4);
