@@ -13,7 +13,9 @@ const cardSchema = new Schema({
     //non-strict enum: gear, status, skill, personality
     category: { type: String, default: 'gear'},
     
-    //tags define inherent properties of the card.
+    //tags define what the card can be applied to.
+    //array can contain one character attribute stat, and any other labels
+    //odd behaviour if there is more than one attribute in the array
     //these have no inherent mechanical abilities but can be checked for by tests
     tags: {type: [String], default: []},
 
