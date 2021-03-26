@@ -72,6 +72,7 @@ describe('SkillCheck', () => {
         toon.library.drawToHandSize();
         const sc = new SkillCheck(toon);
         const results = sc.test(['misc'], 5);
+        console.log(SkillCheck.explainDice(results.dice));
         expect(results.result).toBe(false);
         expect(results.dice).toStrictEqual([4]);
         expect(results.target).toBe(5);
@@ -84,6 +85,7 @@ describe('SkillCheck', () => {
         toon.library.drawToHandSize();
         const sc = new SkillCheck(toon);
         const results = sc.test(['misc'], 1);
+        console.log(SkillCheck.explainDice(results.dice));
         expect(results.result).toBe(true);
         expect(results.dice).toStrictEqual([4]);
         expect(results.target).toBe(1);
