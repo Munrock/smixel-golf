@@ -73,6 +73,8 @@ describe('SkillCheck', () => {
         const sc = new SkillCheck(toon);
         const results = sc.test(['misc'], 5);
         expect(results.result).toBe(false);
+        expect(results.dice).toStrictEqual([4]);
+        expect(results.attribute).toBe('misc');
         expect(results.roll).toBeGreaterThanOrEqual(1);
         expect(results.roll).toBeLessThanOrEqual(4);
     });
@@ -83,6 +85,8 @@ describe('SkillCheck', () => {
         const sc = new SkillCheck(toon);
         const results = sc.test(['misc'], 1);
         expect(results.result).toBe(true);
+        expect(results.dice).toStrictEqual([4]);
+        expect(results.attribute).toBe('misc');
         expect(results.roll).toBeGreaterThanOrEqual(1);
         expect(results.roll).toBeLessThanOrEqual(4);
     });
