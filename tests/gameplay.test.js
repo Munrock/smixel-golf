@@ -72,7 +72,6 @@ describe('SkillCheck', () => {
         toon.library.drawToHandSize();
         const sc = new SkillCheck(toon);
         const results = sc.test(['misc'], 5);
-        console.log(SkillCheck.explainDice(results.dice));
         expect(results.result).toBe(false);
         expect(results.dice.map(d=>d.die).flat()).toStrictEqual([4]);
         expect(results.target).toBe(5);
@@ -85,12 +84,25 @@ describe('SkillCheck', () => {
         toon.library.drawToHandSize();
         const sc = new SkillCheck(toon);
         const results = sc.test(['misc'], 1);
-        console.log(SkillCheck.explainDice(results.dice));
         expect(results.result).toBe(true);
         expect(results.dice.map(d=>d.die).flat()).toStrictEqual([4]);
         expect(results.target).toBe(1);
         expect(results.roll).toBeGreaterThanOrEqual(1);
         expect(results.roll).toBeLessThanOrEqual(4);
+    });
+
+    test('skill check with bonuses from 2 cards', async () => {
+        const toon = await Toon.getFromPlayerId('gameplayertestid2');
+        toon.library.drawToHandSize();
+        const sc = new SkillCheck(toon);
+        const results = sc.test(['armour','physical/fortitude'], 3);
+        console.log(results);
+        expect(results.result).toBe(true);
+        expect(results.target).toBe(3);
+        expect(results.roll).toBeGreaterThanOrEqual(3);
+        expect(results.roll).toBeLessThanOrEqual(14);
+        expect(toon.library.hand.size).toBe(3);
+        expect(toon.library.discard.length).toBe(2);
     });
 
 });
