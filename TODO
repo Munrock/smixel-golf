@@ -2,6 +2,18 @@ Discord Loadout editor
 
 Room Schema
 -create basic rooms
+ //unlisted can stay default for now
+    -nodeType (start/middle/end)
+    -biome
+    -challenge
+        -difficulty
+        -tags
+    -description
+    -narrative
+        -arrival
+        -success
+        -failure
+
 -pass character through rooms
 -pass party through rooms
 
