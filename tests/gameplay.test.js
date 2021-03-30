@@ -105,4 +105,14 @@ describe('SkillCheck', () => {
         expect(toon.library.discard.length).toBe(2);
     });
 
+    test('skill check with multiple items competing for one slot', async () => {
+        const toon = await Toon.getFromPlayerId('gameplayertestid1');
+        toon.library.drawToHandSize();
+        const sc = new SkillCheck(toon);
+        const results = sc.test(['golf club','mental/perception'], 3);
+        console.log(results);
+        expect(toon.library.hand.size).toBe(4);
+        expect(toon.library.discard.length).toBe(1);
+    });
+
 });
