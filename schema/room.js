@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const roomSchema = new Schema({
+    namespace: { type: String, unique: true },
     nodeType: { type: String, default: 'middle', enum: ['start', 'end', 'middle'] },
     canBeRandom: { type: Boolean, default: true },
     biome: { type: String, default: 'plains' },
@@ -32,7 +33,7 @@ const roomSchema = new Schema({
             }
         },
     },
-    
+
 });
 
 
